@@ -18,7 +18,17 @@ const allRecipes = [
   id: 1,
   name: "Cremet pasta med spinat og ost",
   image: require("../assets/recipes/pasta_spinat_ost.jpg"),
-  ingredients: ["spinat", "ost", "pasta", "fløde", "hvidløg", "salt", "peber"],
+  time: "20 min",
+  portion: "1 person",
+  ingredients: [
+    "75 g pasta",
+    "50 g frisk spinat",
+    "40 g revet ost",
+    "0.5 dl fløde",
+    "1 fed hvidløg",
+    "salt",
+    "peber"
+  ],
   steps: [
     "Kog pastaen al dente i saltet vand.",
     "Sautér finthakket hvidløg i lidt smør eller olie.",
@@ -31,7 +41,16 @@ const allRecipes = [
   id: 2,
   name: "Æggekage med tomater og purløg",
   image: require("../assets/recipes/aeggekage_tomat_purloeg.jpg"),
-  ingredients: ["æg", "tomater", "purløg", "smør", "salt", "peber"],
+  time: "15 min",
+  portion: "1 person",
+  ingredients: [
+    "2 æg",
+    "1 tomat",
+    "1 spsk frisk purløg",
+    "1 tsk smør",
+    "salt",
+    "peber"
+  ],
   steps: [
     "Pisk æggene sammen med lidt salt og peber.",
     "Smelt smør i en pande og hæld æggemassen i.",
@@ -43,7 +62,18 @@ const allRecipes = [
   id: 3,
   name: "Stegte ris med grøntsager og soya",
   image: require("../assets/recipes/stegte_ris.jpg"),
-  ingredients: ["ris", "soya", "æg", "grøntsager", "løg", "hvidløg", "ingefær", "peber"],
+  time: "25 min",
+  portion: "1 person",
+  ingredients: [
+    "100 g kogte ris",
+    "1 spsk soya",
+    "1 æg",
+    "100 g blandede grøntsager",
+    "0.5 løg",
+    "1 fed hvidløg",
+    "1 tsk friskrevet ingefær",
+    "peber"
+  ],
   steps: [
     "Kog risene og lad dem køle af.",
     "Svits løg, hvidløg og friskrevet ingefær i olie.",
@@ -56,7 +86,17 @@ const allRecipes = [
   id: 4,
   name: "Kartoffelfrittata med urter og ost",
   image: require("../assets/recipes/kartoffelfrittata.jpg"),
-  ingredients: ["kartofler", "æg", "ost", "timian", "rosmarin", "salt", "peber"],
+  time: "30 min",
+  portion: "1 person",
+  ingredients: [
+    "150 g kartofler",
+    "2 æg",
+    "30 g revet ost",
+    "0.5 tsk tørret timian",
+    "0.5 tsk rosmarin",
+    "salt",
+    "peber"
+  ],
   steps: [
     "Kog kartoflerne næsten møre, og skær dem i skiver.",
     "Pisk æggene med ost, urter, salt og peber.",
@@ -69,7 +109,17 @@ const allRecipes = [
   id: 5,
   name: "Kylling i cremet flødesauce",
   image: require("../assets/recipes/kylling_floedesauce.jpg"),
-  ingredients: ["kylling", "fløde", "løg", "hvidløg", "smør", "salt", "peber"],
+  time: "25 min",
+  portion: "1 person",
+  ingredients: [
+    "120 g kyllingebryst",
+    "1 dl fløde",
+    "0.5 løg",
+    "1 fed hvidløg",
+    "1 tsk smør",
+    "salt",
+    "peber"
+  ],
   steps: [
     "Brun kyllingestykker i smør, til de får farve.",
     "Tilsæt løg og hvidløg, og svits til de er bløde.",
@@ -82,7 +132,17 @@ const allRecipes = [
   id: 6,
   name: "Pasta med tun, citron og persille",
   image: require("../assets/recipes/pasta_tun_citron.jpg"),
-  ingredients: ["tun", "citron", "persille", "pasta", "olivenolie", "hvidløg", "peber"],
+  time: "20 min",
+  portion: "1 person",
+  ingredients: [
+    "75 g pasta",
+    "1 dåse tun i vand (ca. 80 g drænet)",
+    "0.5 citron (saft og skal)",
+    "1 spsk frisk persille",
+    "1 spsk olivenolie",
+    "1 fed hvidløg",
+    "peber"
+  ],
   steps: [
     "Kog pastaen al dente.",
     "Rør drænet tun sammen med olivenolie, citronsaft og fintrevet skal.",
@@ -94,7 +154,18 @@ const allRecipes = [
   id: 7,
   name: "Grøntsagssuppe med rodfrugter og urter",
   image: require("../assets/recipes/suppe_rodfrugter.jpg"),
-  ingredients: ["gulerødder", "selleri", "urter", "løg", "hvidløg", "salt", "peber"],
+  time: "35 min",
+  portion: "1 person",
+  ingredients: [
+    "100 g gulerødder",
+    "50 g selleri",
+    "1 spsk friske urter",
+    "0.5 løg",
+    "1 fed hvidløg",
+    "3 dl vand eller bouillon",
+    "salt",
+    "peber"
+  ],
   steps: [
     "Hak grøntsagerne groft og svits løg og hvidløg i olie.",
     "Tilsæt grøntsager, urter og vand eller bouillon.",
@@ -106,7 +177,16 @@ const allRecipes = [
   id: 8,
   name: "Røræg med skinke og cherrytomater",
   image: require("../assets/recipes/roeraeg_skinke.jpg"),
-  ingredients: ["æg", "skinke", "tomater", "smør", "salt", "peber"],
+  time: "10 min",
+  portion: "1 person",
+  ingredients: [
+    "2 æg",
+    "30 g skinke i strimler",
+    "4 cherrytomater",
+    "1 tsk smør",
+    "salt",
+    "peber"
+  ],
   steps: [
     "Pisk æggene med lidt salt og peber.",
     "Smelt smør i panden og tilsæt æggemassen.",
@@ -118,7 +198,17 @@ const allRecipes = [
   id: 9,
   name: "Mild risotto med svampe og ost",
   image: require("../assets/recipes/risotto_svamp.jpg"),
-  ingredients: ["ris", "svampe", "hvidløg", "ost", "smør", "bouillon", "peber"],
+  time: "30 min",
+  portion: "1 person",
+  ingredients: [
+    "80 g risottoris",
+    "75 g svampe",
+    "1 fed hvidløg",
+    "30 g revet ost",
+    "1 tsk smør",
+    "2 dl bouillon",
+    "peber"
+  ],
   steps: [
     "Svits ris i smør med hakket hvidløg, til de er blanke.",
     "Tilsæt bouillon lidt ad gangen under omrøring.",
@@ -130,7 +220,16 @@ const allRecipes = [
   id: 10,
   name: "Pastasalat med kylling og grønne bønner",
   image: require("../assets/recipes/pastasalat_kylling.jpg"),
-  ingredients: ["pasta", "kylling", "grønne bønner", "dressing", "salt", "peber"],
+  time: "25 min",
+  portion: "1 person",
+  ingredients: [
+    "75 g pasta",
+    "100 g kyllingebryst",
+    "75 g grønne bønner",
+    "2 spsk dressing",
+    "salt",
+    "peber"
+  ],
   steps: [
     "Kog pasta og bønner, og afkøl dem.",
     "Steg kyllingestykker med salt, peber og lidt olie.",
@@ -138,124 +237,6 @@ const allRecipes = [
     "Vend med dressing og servér med friskkværnet peber."
   ],
 },
-{
-  id: 11,
-  name: "Wraps med æg, salat og dressing",
-  image: require("../assets/recipes/wraps_aeg.jpg"),
-  ingredients: ["æg", "salat", "dressing", "wraps", "salt", "peber"],
-  steps: [
-    "Kog æggene hårde og skær dem i skiver.",
-    "Smør dressing på tortillaerne.",
-    "Læg salat og æg i midten.",
-    "Krydr med salt og peber, rul sammen og skær over."
-  ],
-},
-{
-  id: 12,
-  name: "Lun toast med ost og skinke",
-  image: require("../assets/recipes/toast_ost_skinke.jpg"),
-  ingredients: ["brød", "ost", "skinke", "smør", "sennep"],
-  steps: [
-    "Smør brødskiverne med smør og evt. lidt sennep.",
-    "Læg ost og skinke imellem.",
-    "Rist til gylden på begge sider.",
-    "Skær diagonalt og servér med friskkværnet peber."
-  ],
-},
-{
-  id: 13,
-  name: "Ovnbagte grøntsager med hvidløg og urter",
-  image: require("../assets/recipes/ovnbagte_groentsager.jpg"),
-  ingredients: ["grøntsager", "hvidløg", "urter", "olie", "salt", "peber"],
-  steps: [
-    "Skær grøntsager i mundrette stykker.",
-    "Vend dem med olie, presset hvidløg, urter, salt og peber.",
-    "Bag i ovnen ved 200°C i ca. 25-30 minutter, til de er gyldne."
-  ],
-},
-{
-  id: 14,
-  name: "Pasta carbonara med bacon og æg",
-  image: require("../assets/recipes/pasta_carbonara.jpg"),
-  ingredients: ["pasta", "æg", "bacon", "ost", "peber"],
-  steps: [
-    "Kog pastaen al dente i saltet vand.",
-    "Steg bacon sprødt og tag det af panden.",
-    "Pisk æg med revet ost og friskkværnet peber.",
-    "Vend pastaen med æggeblandingen og bacon – uden varme, så det ikke bliver røræg."
-  ],
-},
-{
-  id: 15,
-  name: "Spansk tortilla med kartofler og løg",
-  image: require("../assets/recipes/spansk_tortilla.jpg"),
-  ingredients: ["æg", "kartofler", "løg", "olie", "salt", "peber"],
-  steps: [
-    "Skær kartofler og løg i skiver, steg i olie til bløde.",
-    "Pisk æg med salt og peber, og hæld over.",
-    "Steg ved lav varme, til den sætter sig, og vend forsigtigt.",
-    "Servér med lidt ekstra olivenolie på toppen."
-  ],
-},
-{
-  id: 16,
-  name: "Grøntsagswok med ingefær og æg",
-  image: require("../assets/recipes/groentsagswok_aeg.jpg"),
-  ingredients: ["grøntsager", "ingefær", "æg", "soya", "hvidløg", "olie"],
-  steps: [
-    "Varm olie i en wok, og tilsæt hvidløg og ingefær.",
-    "Tilsæt grøntsager og steg hurtigt ved høj varme.",
-    "Hæld lidt soya over og steg videre.",
-    "Tilsæt æg til sidst, og lad det samle sig let under omrøring."
-  ],
-},
-{
-  id: 17,
-  name: "Omelet med spinat og feta",
-  image: require("../assets/recipes/omelet_spinat_feta.jpg"),
-  ingredients: ["æg", "spinat", "feta", "olie", "salt", "peber"],
-  steps: [
-    "Pisk æg med salt og peber.",
-    "Steg spinat i lidt olie til den falder sammen.",
-    "Hæld æggemassen over og steg ved lav varme.",
-    "Tilsæt smuldret feta og fold omeletten."
-  ],
-},
-{
-  id: 18,
-  name: "Bagte æg i tomatsauce",
-  image: require("../assets/recipes/bagte_aeg_tomat.jpg"),
-  ingredients: ["æg", "tomatsauce", "løg", "hvidløg", "krydderier"],
-  steps: [
-    "Svits løg og hvidløg i olie.",
-    "Tilsæt tomatsauce og krydderier som oregano og chili.",
-    "Lav små fordybninger i saucen og slå æggene ud.",
-    "Bag i ovnen ved 180°C til æggene er netop sat."
-  ],
-},
-{
-  id: 19,
-  name: "Mini pizzaer på toastbrød",
-  image: require("../assets/recipes/mini_pizzaer.jpg"),
-  ingredients: ["toastbrød", "tomatsauce", "ost", "skinke", "oregano"],
-  steps: [
-    "Smør toastbrød med tomatsauce.",
-    "Top med skinke, ost og et drys oregano.",
-    "Bag i ovnen ved 200°C i 10-12 minutter, til gyldne og sprøde."
-  ],
-},
-{
-  id: 20,
-  name: "Lun kartoffelsalat med æg og sennepsdressing",
-  image: require("../assets/recipes/kartoffelsalat_aeg.jpg"),
-  ingredients: ["kartofler", "æg", "sennep", "dressing", "purløg", "salt", "peber"],
-  steps: [
-    "Kog kartofler og skær dem i skiver.",
-    "Kog æggene, pil dem og skær i både.",
-    "Rør sennep i dressingen og smag til.",
-    "Vend kartofler, æg og dressing sammen og drys med purløg."
-  ],
-}
 
 ];
 
