@@ -1,9 +1,9 @@
 import {
-    ImageBackground,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import CustomHeader from "../components/CustomHeader";
 
@@ -20,7 +20,7 @@ export default function HomeScreen({ navigation }) {
         resizeMode="contain"
       >
         {/* 👇 Tilføjet “Fridgy”-titel */}
-        <Text style={styles.logo}>Fridgy</Text>
+        <Text style={styles.logo}>FRIDGY</Text>
 
         <View style={styles.bottomContent}>
           <Text style={styles.title}>Hvad er der i dit køleskab?</Text>
@@ -43,14 +43,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     alignItems: "center",
+    marginBottom: 200,
   },
   // 👇 Ny “Fridgy”-tekst
   logo: {
     fontFamily: "BelanosimaBold",
-    fontSize: 48,
-    color: "#49586B",
+    fontSize: 70,
+    color: "#F4A0CE",
     position: "absolute",
-    top: 140, // justér højden her hvis den skal længere ned
+    top: 100, // justér højden her hvis den skal længere ned
     textAlign: "center",
   },
   bottomContent: { alignItems: "center", marginBottom: 60 },
@@ -59,17 +60,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#49586B",
     marginBottom: 20,
+    top: 100,
     fontFamily: "BelanosimaBold",
   },
   button: {
-    backgroundColor: "#49586B",
+    backgroundColor: "#F4A0CE",
     paddingVertical: 14,
     paddingHorizontal: 50,
     borderRadius: 10,
+    top: 100,
   },
   buttonText: {
     color: "#F3F0E9",
-    fontSize: 16,
+    fontSize: 25,
     fontWeight: "bold",
     fontFamily: "BelanosimaBold",
   },

@@ -1,14 +1,14 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import {
-    FlatList,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import CustomHeader from "../components/CustomHeader";
 
@@ -74,7 +74,7 @@ export default function SearchScreen({ navigation }) {
     "Majs",
     "Ærter",
     "Bønner",
-    "selleri",
+    "Selleri",
     "Forårsløg",
     "Porrer",
     "Asparges",
@@ -125,7 +125,7 @@ export default function SearchScreen({ navigation }) {
     "Oliven",
     "Kapers",
     "Peberrod",
-    "Syltede agurker",  
+    "Syltede agurker",
     "Rødbeder",
     "Hummus",
     "Tzatziki",
@@ -178,38 +178,43 @@ export default function SearchScreen({ navigation }) {
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
-      {/* Fælles topbar */}
       <CustomHeader navigation={navigation} title="Køleskab" />
 
       <View style={styles.content}>
         <Text style={styles.title}>Hvad er der i dit køleskab?</Text>
 
-        <View style={styles.inputRow}>
-          <TextInput
-            style={styles.input}
-            placeholder="Indtast ingredienser..."
-            placeholderTextColor="#49586B"
-            value={input}
-            onChangeText={handleInputChange}
-          />
+        {/* 🔍 Søgefelt og kamera */}
+        <View style={styles.searchRow}>
+          <View style={styles.searchBox}>
+            <Ionicons name="search" size={24} color="gray" style={{ marginRight: 8 }} />
+            <TextInput
+              placeholder="Indtast ingredienser..."
+              placeholderTextColor="#666"
+              style={styles.searchInput}
+              value={input}
+              onChangeText={handleInputChange}
+            />
+          </View>
 
           <TouchableOpacity
             style={styles.cameraButton}
             onPress={() => navigation.navigate("Kamera")}
           >
-            <Ionicons name="camera-outline" size={32} color="#F3F0E9" />
-        </TouchableOpacity>
-
+            <Ionicons name="camera" size={42} color="#F3F0E9" />
+          </TouchableOpacity>
         </View>
+
+        {/* 📍 Centreret hjælpetekst */}
+        <Text style={styles.helperText}>
+          *Indtast minimum tre produkter fra dit køleskab{"\n"}
+          eller brug kameraet til at scanne dit køleskab!
+        </Text>
 
         {/* Popdown-menu */}
         {suggestions.length > 0 && (
           <View style={styles.suggestionBox}>
             {suggestions.map((item) => (
-              <TouchableOpacity
-                key={item}
-                onPress={() => handleSelectIngredient(item)}
-              >
+              <TouchableOpacity key={item} onPress={() => handleSelectIngredient(item)}>
                 <Text style={styles.suggestionText}>{item}</Text>
               </TouchableOpacity>
             ))}
@@ -232,24 +237,21 @@ export default function SearchScreen({ navigation }) {
 
         {/* Knap vises kun ved 3+ ingredienser */}
         {ingredients.length >= 3 && (
-  <TouchableOpacity
-  style={styles.recipeButton}
-  onPress={() =>
-  navigation.navigate("OpskrifterStack", {
-    screen: "Opskrifter",
-    params: {
-      ingredients: ingredients,
-      fromCamera: false, // 👈 vigtigt — overskriver tidligere kameradata
-    },
-  })
-}
->
-  <Text style={styles.recipeButtonText}>Se opskrifter her</Text>
-</TouchableOpacity>
-
-)}
-
-    
+          <TouchableOpacity
+            style={styles.recipeButton}
+            onPress={() =>
+              navigation.navigate("OpskrifterStack", {
+                screen: "Opskrifter",
+                params: {
+                  ingredients: ingredients,
+                  fromCamera: false,
+                },
+              })
+            }
+          >
+            <Text style={styles.recipeButtonText}>Se opskrifter her</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </KeyboardAvoidingView>
   );
@@ -258,6 +260,7 @@ export default function SearchScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#F3F0E9" },
   content: { flex: 1, alignItems: "center", padding: 20 },
+
   title: {
     fontSize: 24,
     fontFamily: "BelanosimaBold",
@@ -265,26 +268,51 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     textAlign: "center",
   },
-  inputRow: {
+
+  // 🧠 Søgefelt + kamera
+  searchRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    justifyContent: "center",
+    gap: 20,
+    marginBottom: 10,
   },
-  input: {
-    backgroundColor: "#E7E7E7",
-    borderColor: "#49586B",
+  searchBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#ECECEC",
+    borderColor: "#F4A0CE",
     borderWidth: 2,
-    borderRadius: 8,
-    padding: 10,
+    borderRadius: 40,
+    paddingHorizontal: 15,
+    height: 60,
     width: "70%",
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 18,
+    color: "#333",
     fontFamily: "Belanosima",
-    fontSize: 16,
   },
   cameraButton: {
-    backgroundColor: "#49586B",
+    backgroundColor: "#F4A0CE",
+    borderRadius: 12,
     padding: 12,
-    borderRadius: 8,
   },
+
+  // 📍 Centreret hjælpetekst
+  helperText: {
+    fontFamily: "Belanosima",
+    fontSize: 14,
+    color: "#49586B",
+    fontStyle: "italic",
+    textAlign: "center",
+    marginTop: 8,
+    marginBottom: 15,
+    lineHeight: 20,
+    width: "85%",
+  },
+
   suggestionBox: {
     backgroundColor: "#E7E7E7",
     borderColor: "#49586B",

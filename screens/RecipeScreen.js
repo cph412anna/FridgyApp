@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
@@ -11,249 +12,467 @@ import {
 } from "react-native";
 import CustomHeader from "../components/CustomHeader";
 
-
 // 🧾 Liste over alle opskrifter
-const allRecipes = [
+ const allRecipes = [
   {
-  id: 1,
-  name: "Cremet pasta med spinat og ost",
-  image: require("../assets/recipes/pasta_spinat_ost.jpg"),
-  time: "20 min",
-  portion: "1 person",
-  ingredients: [
-    "75 g pasta",
-    "50 g frisk spinat",
-    "40 g revet ost",
-    "0.5 dl fløde",
-    "1 fed hvidløg",
-    "salt",
-    "peber"
-  ],
-  steps: [
-    "Kog pastaen al dente i saltet vand.",
-    "Sautér finthakket hvidløg i lidt smør eller olie.",
-    "Tilsæt fløde og revet ost, og lad det smelte sammen.",
-    "Vend spinat i, lad den falde sammen, og smag til med salt og peber.",
-    "Bland pastaen i saucen og servér med friskrevet ost."
-  ],
-},
-{
-  id: 2,
-  name: "Æggekage med tomater og purløg",
-  image: require("../assets/recipes/aeggekage_tomat_purloeg.jpg"),
-  time: "15 min",
-  portion: "1 person",
-  ingredients: [
-    "2 æg",
-    "1 tomat",
-    "1 spsk frisk purløg",
-    "1 tsk smør",
-    "salt",
-    "peber"
-  ],
-  steps: [
-    "Pisk æggene sammen med lidt salt og peber.",
-    "Smelt smør i en pande og hæld æggemassen i.",
-    "Steg ved middel varme, indtil æggekagen er fast men stadig blød i midten.",
-    "Top med friske tomater og finthakket purløg før servering."
-  ],
-},
-{
-  id: 3,
-  name: "Stegte ris med grøntsager og soya",
-  image: require("../assets/recipes/stegte_ris.jpg"),
-  time: "25 min",
-  portion: "1 person",
-  ingredients: [
-    "100 g kogte ris",
-    "1 spsk soya",
-    "1 æg",
-    "100 g blandede grøntsager",
-    "0.5 løg",
-    "1 fed hvidløg",
-    "1 tsk friskrevet ingefær",
-    "peber"
-  ],
-  steps: [
-    "Kog risene og lad dem køle af.",
-    "Svits løg, hvidløg og friskrevet ingefær i olie.",
-    "Tilsæt grøntsager og steg dem sprøde.",
-    "Tilsæt ris og soya, og steg det hele sammen.",
-    "Lav plads på panden, hæld æg i, og rør det ud. Smag til med peber."
-  ],
-},
-{
-  id: 4,
-  name: "Kartoffelfrittata med urter og ost",
-  image: require("../assets/recipes/kartoffelfrittata.jpg"),
-  time: "30 min",
-  portion: "1 person",
-  ingredients: [
-    "150 g kartofler",
-    "2 æg",
-    "30 g revet ost",
-    "0.5 tsk tørret timian",
-    "0.5 tsk rosmarin",
-    "salt",
-    "peber"
-  ],
-  steps: [
-    "Kog kartoflerne næsten møre, og skær dem i skiver.",
-    "Pisk æggene med ost, urter, salt og peber.",
-    "Læg kartoflerne i en pande, og hæld æggemassen over.",
-    "Steg ved lav varme, til den sætter sig, og bag evt. færdig i ovnen.",
-    "Servér med frisk timian på toppen."
-  ],
-},
-{
-  id: 5,
-  name: "Kylling i cremet flødesauce",
-  image: require("../assets/recipes/kylling_floedesauce.jpg"),
-  time: "25 min",
-  portion: "1 person",
-  ingredients: [
-    "120 g kyllingebryst",
-    "1 dl fløde",
-    "0.5 løg",
-    "1 fed hvidløg",
-    "1 tsk smør",
-    "salt",
-    "peber"
-  ],
-  steps: [
-    "Brun kyllingestykker i smør, til de får farve.",
-    "Tilsæt løg og hvidløg, og svits til de er bløde.",
-    "Hæld fløde over og lad det simre 10-15 minutter.",
-    "Smag til med salt, peber og evt. lidt citronsaft.",
-    "Servér med ris eller frisk pasta."
-  ],
-},
-{
-  id: 6,
-  name: "Pasta med tun, citron og persille",
-  image: require("../assets/recipes/pasta_tun_citron.jpg"),
-  time: "20 min",
-  portion: "1 person",
-  ingredients: [
-    "75 g pasta",
-    "1 dåse tun i vand (ca. 80 g drænet)",
-    "0.5 citron (saft og skal)",
-    "1 spsk frisk persille",
-    "1 spsk olivenolie",
-    "1 fed hvidløg",
-    "peber"
-  ],
-  steps: [
-    "Kog pastaen al dente.",
-    "Rør drænet tun sammen med olivenolie, citronsaft og fintrevet skal.",
-    "Tilsæt finthakket hvidløg og persille.",
-    "Vend det hele sammen med den varme pasta og smag til med peber."
-  ],
-},
-{
-  id: 7,
-  name: "Grøntsagssuppe med rodfrugter og urter",
-  image: require("../assets/recipes/suppe_rodfrugter.jpg"),
-  time: "35 min",
-  portion: "1 person",
-  ingredients: [
-    "100 g gulerødder",
-    "50 g selleri",
-    "1 spsk friske urter",
-    "0.5 løg",
-    "1 fed hvidløg",
-    "3 dl vand eller bouillon",
-    "salt",
-    "peber"
-  ],
-  steps: [
-    "Hak grøntsagerne groft og svits løg og hvidløg i olie.",
-    "Tilsæt grøntsager, urter og vand eller bouillon.",
-    "Kog suppen til grøntsagerne er møre.",
-    "Blend halvdelen for cremet konsistens, og smag til med salt og peber."
-  ],
-},
-{
-  id: 8,
-  name: "Røræg med skinke og cherrytomater",
-  image: require("../assets/recipes/roeraeg_skinke.jpg"),
-  time: "10 min",
-  portion: "1 person",
-  ingredients: [
-    "2 æg",
-    "30 g skinke i strimler",
-    "4 cherrytomater",
-    "1 tsk smør",
-    "salt",
-    "peber"
-  ],
-  steps: [
-    "Pisk æggene med lidt salt og peber.",
-    "Smelt smør i panden og tilsæt æggemassen.",
-    "Rør forsigtigt til æggene bliver bløde og cremede.",
-    "Tilsæt skinke og halve cherrytomater, og varm kort igennem."
-  ],
-},
-{
-  id: 9,
-  name: "Mild risotto med svampe og ost",
-  image: require("../assets/recipes/risotto_svamp.jpg"),
-  time: "30 min",
-  portion: "1 person",
-  ingredients: [
-    "80 g risottoris",
-    "75 g svampe",
-    "1 fed hvidløg",
-    "30 g revet ost",
-    "1 tsk smør",
-    "2 dl bouillon",
-    "peber"
-  ],
-  steps: [
-    "Svits ris i smør med hakket hvidløg, til de er blanke.",
-    "Tilsæt bouillon lidt ad gangen under omrøring.",
-    "Steg svampe separat, og vend dem i risottoen.",
-    "Rør ost i til sidst og smag til med peber og lidt citronsaft."
-  ],
-},
-{
-  id: 10,
-  name: "Pastasalat med kylling og grønne bønner",
-  image: require("../assets/recipes/pastasalat_kylling.jpg"),
-  time: "25 min",
-  portion: "1 person",
-  ingredients: [
-    "75 g pasta",
-    "100 g kyllingebryst",
-    "75 g grønne bønner",
-    "2 spsk dressing",
-    "salt",
-    "peber"
-  ],
-  steps: [
-    "Kog pasta og bønner, og afkøl dem.",
-    "Steg kyllingestykker med salt, peber og lidt olie.",
-    "Bland pasta, bønner og kylling i en skål.",
-    "Vend med dressing og servér med friskkværnet peber."
-  ],
-},
-
+    id: 1,
+    name: "Cremet kyllingepasta med spinat og flødeost",
+    image: require("../assets/recipes/kyllingepasta_spinat_floedeost.jpg"),
+    imagePath: "../assets/recipes/kyllingepasta_spinat_floedeost.jpg",
+    time: "25 min",
+    portion: "1 person",
+    ingredients: [
+      "120 g kyllingebryst",
+      "50 g frisk spinat",
+      "50 g flødeost",
+      "0.5 dl madlavningsfløde",
+      "0.5 løg",
+      "1 fed hvidløg",
+      "75 g pasta",
+      "salt",
+      "peber",
+    ],
+    steps: [
+      "Kog pastaen al dente.",
+      "Steg kyllingestykker i lidt olie.",
+      "Tilsæt løg og hvidløg og svits til de er bløde.",
+      "Rør flødeost og fløde i, lad det smelte sammen.",
+      "Vend spinaten i, smag til med salt og peber, og tilsæt pastaen.",
+    ],
+  },
+  {
+    id: 2,
+    name: "Ovnbagt laks med citron og asparges",
+    image: require("../assets/recipes/laks_citron_asparges.jpg"),
+    imagePath: "../assets/recipes/laks_citron_asparges.jpg",
+    time: "20 min",
+    portion: "1 person",
+    ingredients: [
+      "120 g laks",
+      "0.5 citron",
+      "100 g asparges",
+      "1 tsk smør",
+      "salt",
+      "peber",
+      "dild",
+    ],
+    steps: [
+      "Forvarm ovnen til 200°C.",
+      "Læg laksen i et fad, tilsæt asparges og smør.",
+      "Pres citronsaft over og krydr med salt, peber og dild.",
+      "Bag i ovnen i 15–20 minutter.",
+    ],
+  },
+  {
+    id: 3,
+    name: "Krydret oksekødsgryde med bønner og chili",
+    image: require("../assets/recipes/oksekodsgryde_boenner_chili.jpg"),
+    imagePath: "../assets/recipes/oksekodsgryde_boenner_chili.jpg",
+    time: "30 min",
+    portion: "1 person",
+    ingredients: [
+      "100 g hakket oksekød",
+      "0.5 løg",
+      "1 fed hvidløg",
+      "100 g bønner",
+      "1 dl hakkede tomater",
+      "0.5 tsk chili",
+      "0.5 tsk paprika",
+      "75 g ris",
+    ],
+    steps: [
+      "Steg løg og hvidløg i olie.",
+      "Tilsæt oksekød og brun det.",
+      "Tilsæt tomater, bønner, chili og paprika.",
+      "Lad det simre 15 minutter og servér med ris.",
+    ],
+  },
+  {
+    id: 4,
+    name: "Kartoffelfrittata med bacon og ost",
+    image: require("../assets/recipes/kartoffelfrittata_bacon_ost.jpg"),
+    imagePath: "../assets/recipes/kartoffelfrittata_bacon_ost.jpg",
+    time: "25 min",
+    portion: "1 person",
+    ingredients: [
+      "150 g kartofler",
+      "40 g bacon",
+      "2 æg",
+      "0.5 løg",
+      "30 g revet ost",
+      "1 tsk purløg",
+      "salt",
+      "peber",
+    ],
+    steps: [
+      "Kog kartoflerne næsten møre og skær dem i skiver.",
+      "Steg bacon sprødt og tilsæt løg.",
+      "Pisk æg, ost og purløg sammen.",
+      "Hæld over kartofler og bacon, steg ved lav varme.",
+    ],
+  },
+  {
+    id: 5,
+    name: "Pasta med tun, majs og creme fraiche",
+    image: require("../assets/recipes/pasta_tun_majs_cremefraiche.jpg"),
+    imagePath: "../assets/recipes/pasta_tun_majs_cremefraiche.jpg",
+    time: "15 min",
+    portion: "1 person",
+    ingredients: [
+      "1 dåse tun",
+      "50 g majs",
+      "2 spsk creme fraiche",
+      "0.5 løg",
+      "1 tsk citronsaft",
+      "75 g pasta",
+      "salt",
+      "peber",
+    ],
+    steps: [
+      "Kog pastaen al dente.",
+      "Bland tun, majs, creme fraiche og løg i en skål.",
+      "Tilsæt citronsaft, salt og peber.",
+      "Vend det sammen med den varme pasta.",
+    ],
+  },
+  {
+    id: 6,
+    name: "Grøntsagstærte med porrer, broccoli og feta",
+    image: require("../assets/recipes/groentsagstaerte_porrer_broccoli_feta.jpg"),
+    imagePath: "../assets/recipes/groentsagstaerte_porrer_broccoli_feta.jpg",
+    time: "35 min",
+    portion: "1 person",
+    ingredients: [
+      "1 porre",
+      "75 g broccoli",
+      "2 æg",
+      "0.5 dl fløde",
+      "30 g feta",
+      "1 tsk smør",
+      "25 g mel",
+      "salt",
+    ],
+    steps: [
+      "Forvarm ovnen til 180°C.",
+      "Rør mel, smør og lidt vand til en dej og forbag bunden.",
+      "Pisk æg og fløde, tilsæt grøntsager og feta.",
+      "Hæld massen i tærten og bag 25 minutter.",
+    ],
+  },
+  {
+    id: 7,
+    name: "Kyllingelår i ovn med rodfrugter og timian",
+    image: require("../assets/recipes/kyllingelaar_rodfrugter_timian.jpg"),
+    imagePath: "../assets/recipes/kyllingelaar_rodfrugter_timian.jpg",
+    time: "40 min",
+    portion: "1 person",
+    ingredients: [
+      "1 kyllingelår",
+      "1 gulerod",
+      "100 g kartofler",
+      "0.5 løg",
+      "0.5 tsk timian",
+      "1 spsk olivenolie",
+      "salt",
+      "peber",
+    ],
+    steps: [
+      "Forvarm ovnen til 200°C.",
+      "Læg kylling og grøntsager i et fad, dryp med olie.",
+      "Krydr med salt, peber og timian.",
+      "Bag i 35–40 minutter til gylden og gennemstegt.",
+    ],
+  },
+  {
+    id: 8,
+    name: "Frisk pastasalat med skinke og rucola",
+    image: require("../assets/recipes/pastasalat_skinke_rucola.jpg"),
+    imagePath: "../assets/recipes/pastasalat_skinke_rucola.jpg",
+    time: "15 min",
+    portion: "1 person",
+    ingredients: [
+      "50 g skinke",
+      "20 g rucola",
+      "4 cherrytomater",
+      "0.25 agurk",
+      "75 g pasta",
+      "2 spsk italiensk dressing",
+      "1 spsk parmesan",
+    ],
+    steps: [
+      "Kog pastaen og afkøl den.",
+      "Skær grøntsagerne og skinken.",
+      "Bland det hele og tilsæt dressing og parmesan.",
+    ],
+  },
+  {
+    id: 9,
+    name: "Pasta carbonara med bacon og fløde",
+    image: require("../assets/recipes/pasta_carbonara_bacon_floede.jpg"),
+    imagePath: "../assets/recipes/pasta_carbonara_bacon_floede.jpg",
+    time: "20 min",
+    portion: "1 person",
+    ingredients: [
+      "75 g bacon",
+      "1 æg",
+      "0.5 dl fløde",
+      "20 g parmesan",
+      "1 fed hvidløg",
+      "75 g pasta",
+      "peber",
+    ],
+    steps: [
+      "Steg bacon sprødt, tilsæt hvidløg.",
+      "Pisk æg, fløde og parmesan sammen.",
+      "Vend den varme pasta i baconen og tilsæt æggeblandingen.",
+      "Rør hurtigt og servér med peber.",
+    ],
+  },
+  {
+    id: 10,
+    name: "Lun salat med torsk, æg og sennepsdressing",
+    image: require("../assets/recipes/lun_salat_torsk_aeg.jpg"),
+    imagePath: "../assets/recipes/lun_salat_torsk_aeg.jpg",
+    time: "25 min",
+    portion: "1 person",
+    ingredients: [
+      "100 g torsk",
+      "1 æg",
+      "50 g salat",
+      "0.5 citron",
+      "1 spsk honning sennep dressing",
+      "1 forårsløg",
+    ],
+    steps: [
+      "Kog ægget hårdkogt og del det.",
+      "Damp torsken i 10 min.",
+      "Anret salat, æg og torsk, dryp dressing over.",
+    ],
+  },
+  {
+    id: 11,
+    name: "Risotto med svampe, hytteost og persille",
+    image: require("../assets/recipes/risotto_svamp_hytteost.jpg"),
+    imagePath: "../assets/recipes/risotto_svamp_hytteost.jpg",
+    time: "30 min",
+    portion: "1 person",
+    ingredients: [
+      "75 g champignon",
+      "0.5 løg",
+      "80 g risottoris",
+      "50 g hytteost",
+      "1 tsk smør",
+      "1 fed hvidløg",
+      "1 spsk persille",
+    ],
+    steps: [
+      "Svits løg og hvidløg i smør.",
+      "Tilsæt ris og rør til de bliver blanke.",
+      "Hæld bouillon i lidt ad gangen.",
+      "Tilsæt svampe og vend i hytteost og persille til sidst.",
+    ],
+  },
+  {
+    id: 12,
+    name: "Kalkun i cremet flødesauce med spinat",
+    image: require("../assets/recipes/kalkun_floede_spinat.jpg"),
+    imagePath: "../assets/recipes/kalkun_floede_spinat.jpg",
+    time: "25 min",
+    portion: "1 person",
+    ingredients: [
+      "120 g kalkun",
+      "0.5 dl fløde",
+      "50 g spinat",
+      "0.5 løg",
+      "1 fed hvidløg",
+      "75 g ris",
+      "salt",
+      "peber",
+    ],
+    steps: [
+      "Steg kalkun i smør, tilsæt løg og hvidløg.",
+      "Hæld fløde over og lad det simre.",
+      "Tilsæt spinat til sidst og servér med ris.",
+    ],
+  },
+  {
+    id: 13,
+    name: "Rejesalat med avocado og lime",
+    image: require("../assets/recipes/rejesalat_avocado_lime.jpg"),
+    imagePath: "../assets/recipes/rejesalat_avocado_lime.jpg",
+    time: "15 min",
+    portion: "1 person",
+    ingredients: [
+      "100 g rejer",
+      "0.5 avocado",
+      "0.5 lime",
+      "50 g salat",
+      "1 spsk yoghurt dressing",
+      "dild",
+    ],
+    steps: [
+      "Skær avocado i tern.",
+      "Bland rejer, salat og dressing.",
+      "Tilsæt lime og dild.",
+    ],
+  },
+  {
+    id: 14,
+    name: "Wraps med spegepølse, ost og grønt",
+    image: require("../assets/recipes/wraps_spegepolse_ost.jpg"),
+    imagePath: "../assets/recipes/wraps_spegepolse_ost.jpg",
+    time: "10 min",
+    portion: "1 person",
+    ingredients: [
+      "1 tortilla",
+      "4 skiver spegepølse",
+      "2 skiver ost",
+      "2 skiver tomat",
+      "1 spsk thousand island dressing",
+    ],
+    steps: [
+      "Smør dressing på tortillaen.",
+      "Læg spegepølse, ost og grønt ovenpå.",
+      "Rul sammen, put den i paninigrill eller stegepande og del i halve.",
+    ],
+  },
+  {
+    id: 15,
+    name: "Grøntsagswok med hakket kylling og soyasauce",
+    image: require("../assets/recipes/groentsagswok_kylling_soya.jpg"),
+    imagePath: "../assets/recipes/groentsagswok_kylling_soya.jpg",
+    time: "20 min",
+    portion: "1 person",
+    ingredients: [
+      "100 g hakket kylling",
+      "0.5 peberfrugt",
+      "1 gulerod",
+      "1 forårsløg",
+      "1 spsk soyasauce",
+      "0.5 tsk frisk ingefær",
+      "75 g ris",
+    ],
+    steps: [
+      "Steg kylling og grøntsager i wok.",
+      "Tilsæt soya og ingefær.",
+      "Servér med kogte ris.",
+    ],
+  },
+  {
+    id: 16,
+    name: "Cremet svinegryde med blomkål og fløde",
+    image: require("../assets/recipes/svinegryde_blomkaal_floede.jpg"),
+    imagePath: "../assets/recipes/svinegryde_blomkaal_floede.jpg",
+    time: "25 min",
+    portion: "1 person",
+    ingredients: [
+      "100 g hakket svinekød",
+      "100 g blomkål",
+      "0.5 løg",
+      "0.5 dl fløde",
+      "0.5 tsk rosmarin",
+      "salt",
+      "peber",
+    ],
+    steps: [
+      "Steg løg og svinekød.",
+      "Tilsæt blomkål og fløde.",
+      "Smag til med rosmarin, salt og peber.",
+    ],
+  },
+  {
+    id: 17,
+    name: "Frisk sommersalat med rejer, mango og avocado",
+    image: require("../assets/recipes/sommersalat_rejer_mango.jpg"),
+    imagePath: "../assets/recipes/sommersalat_rejer_mango.jpg",
+    time: "10 min",
+    portion: "1 person",
+    ingredients: [
+      "100 g rejer",
+      "0.25 mango",
+      "0.5 avocado",
+      "20 g rucola",
+      "1 tsk citron",
+      "1 spsk yoghurt dressing",
+      "Frisk Chili",
+    ],
+    steps: [
+      "Skær mango og avocado i tern.",
+      "Skær chili fint.",
+      "Bland alt i en skål og tilsæt dressing.",
+    ],
+  },
+  {
+    id: 18,
+    name: "Vaniljeskyr med hindbær, honning og nødder",
+    image: require("../assets/recipes/vaniljeskyr_honning_noedder.jpg"),
+    imagePath: "../assets/recipes/vaniljeskyr_honning_noedder.jpg",
+    time: "5 min",
+    portion: "1 person",
+    ingredients: [
+      "150 g vaniljeskyr",
+      "50 g hindbær",
+      "1 tsk honning",
+      "10 g nødder",
+    ],
+    steps: [
+      "Put skyr i en skål.",
+      "Top med hindbær, honning og nødder.",
+    ],
+  },
+  {
+    id: 19,
+    name: "Fersken trifli med mascarpone og blåbær",
+    image: require("../assets/recipes/fersken_trifli_mascarpone.jpg"),
+    imagePath: "../assets/recipes/fersken_trifli_mascarpone.jpg",
+    time: "10 min",
+    portion: "1 person",
+    ingredients: [
+      "1 fersken",
+      "2 spsk mascarpone",
+      "50 g blåbær",
+      "2 spsk yoghurt",
+      "1 tsk honning",
+      "1 spsk havregryn",
+    ],
+    steps: [
+      "Skær fersken i tern og bland med yoghurt og mascarpone.",
+      "Tilsæt honning og top med blåbær og havregryn.",
+    ],
+  },
+  {
+    id: 20,
+    name: "Bananpandekager med jordbær og peanutbutter",
+    image: require("../assets/recipes/bananpandekager_jordbaer_peanutbutter.jpg"),
+    imagePath: "../assets/recipes/bananpandekager_jordbaer_peanutbutter.jpg",
+    time: "15 min",
+    portion: "1 person",
+    ingredients: [
+      "1 banan",
+      "1 æg",
+      "20 g mel",
+      "1 tsk smør",
+      "50 g jordbær",
+      "1 tsk peanutbutter",
+    ],
+    steps: [
+      "Mos bananen og bland med æg og mel.",
+      "Steg små pandekager i smør.",
+      "Server med jordbær og peanutbutter.",
+    ],
+  },
 ];
 
 export default function RecipeScreen({ navigation }) {
   const route = useRoute();
   const { ingredients = [], fromCamera = false } = route.params || {};
-
   const [extraIngredient, setExtraIngredient] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [currentIngredients, setCurrentIngredients] = useState(ingredients);
 
   useEffect(() => {
-  if (ingredients.length > 0) {
-    setCurrentIngredients(ingredients);
-  }
-}, [ingredients]);
-
+    if (ingredients.length > 0) setCurrentIngredients(ingredients);
+  }, [ingredients]);
 
   // 🧠 Filtrering – kræver min. 2 match
   const filteredRecipes = allRecipes.filter((recipe) => {
@@ -265,171 +484,48 @@ export default function RecipeScreen({ navigation }) {
     return matchCount >= 2;
   });
 
-  const allIngredients = [
-    "Kyllingebryst",
-    "Kyllingelår",
-    "Hakket kylling",
-    "Hakket oksekød",
-    "Bøf",
-    "Oksemørbrad",
-    "Hakket svinekød",
-    "Bacon",
-    "Skinke",
-    "Pølser",
-    "Laks",
-    "Torsk",
-    "Tun",
-    "Sild",
-    "Fiskefrikadeller",
-    "Æg",
-    "Rejer",
-    "Kalkun",
-    "Spegepølse",
-    "Mælk",
-    "Fløde",
-    "Madlavningsfløde",
-    "Yoghurt",
-    "Skyr",
-    "Smør",
-    "Plantesmør",
-    "Skæreost",
-    "Revet ost",
-    "Hytteost",
-    "Mozerella",
-    "Parmesan",
-    "Feta",
-    "Flødeost",
-    "Ricotta",
-    "Marscarpone",
-    "Creme fraiche",
-    "Tomater",
-    "Agurk",
-    "Salat",
-    "Spinat",
-    "Rucola",
-    "Gulerødder",
-    "Kartofler",
-    "Søde kartofler",
-    "Løg",
-    "Hvidløg",
-    "Peberfrugt",
-    "Broccoli",
-    "Blomkål",
-    "Zucchini",
-    "Aubergine",
-    "Champignon",
-    "Majs",
-    "Ærter",
-    "Bønner",
-    "selleri",
-    "Forårsløg",
-    "Porrer",
-    "Asparges",
-    "Avocado",
-    "Citron",
-    "Lime",
-    "Koriander",
-    "Persille",
-    "Basilikum",
-    "Timian",
-    "Rosmarin",
-    "Oregano",
-    "Dild",
-    "Mynte",
-    "Æbler",
-    "Bananer",
-    "Appelsiner",
-    "Pærer",
-    "Druer",
-    "Jordbær",
-    "Blåbær",
-    "Hindbær",
-    "Ananas",
-    "Mango",
-    "Kiwi",
-    "Vandmelon",
-    "Honningmelon",
-    "Ferskner",
-    "Nektariner",
-    "Abrikoser",
-    "Kirsebær",
-    "Granatæble",
-    "Ketchup",
-    "Sennep",
-    "Mayonnaise",
-    "Soyasauce",
-    "Remoulade",
-    "Chilisauce",
-    "Barbecuesauce",
-    "Chili sauce",
-    "Teriaki sauce",
-    "Tabascosauce",
-    "Sriracha sauce",
-    "Pesto",
-    "Marmelade",
-    "Syltetøj",
-    "Pickles",
-    "Oliven",
-    "Kapers",
-    "Peberrod",
-    "Syltede agurker",  
-    "Rødbeder",
-    "Hummus",
-    "Tzatziki",
-    "Guacamole",
-    "Peanutbutter",
-    "Juice",
-    "Kakaomælk",
-    "Øl",
-    "Vin",
-    "Ingefær",
-    "Creme Fraiche dressing",
-    "Thousand Island dressing",
-    "Italiensk dressing",
-    "Balsamico dressing",
-    "Ranch dressing",
-    "Honning sennep dressing",
-    "Caesar dressing",
-    "Yoghurt dressing",
-    "Ost",
-    "Purløg",
-    "Chili",
-  ];
-
   return (
     <View style={styles.container}>
       <CustomHeader navigation={navigation} title="Opskrifter" />
-
       <ScrollView contentContainerStyle={styles.scroll}>
         <Text style={styles.title}>Opskrifter</Text>
 
-        {/* 👇 Kun vist, hvis man kommer fra kamera */}
         {fromCamera && (
           <View style={styles.addIngredientSection}>
             <Text style={styles.addIngredientTitle}>Tilføj flere ingredienser:</Text>
-            <TextInput
-              style={styles.addIngredientInput}
-              placeholder="Skriv ingrediens..."
-              placeholderTextColor="#49586B"
-              value={extraIngredient}
-              onChangeText={(text) => {
-                setExtraIngredient(text);
-                if (text.length > 0) {
-                  const filtered = allIngredients.filter((item) =>
-                    item.toLowerCase().startsWith(text.toLowerCase())
-                  );
-                  setSuggestions(filtered);
-                } else {
-                  setSuggestions([]);
-                }
-              }}
-            />
+
+            {/* Søgefelt med samme stil som forsiden */}
+            <View style={styles.inputContainer}>
+              <Ionicons
+                name="search"
+                size={22}
+                color="#49586B"
+                style={styles.searchIcon}
+              />
+              <TextInput
+                style={styles.addIngredientInput}
+                placeholder="Skriv ingrediens..."
+                placeholderTextColor="#49586B"
+                value={extraIngredient}
+                onChangeText={(text) => {
+                  setExtraIngredient(text);
+                  if (text.length > 0) {
+                    const filtered = allRecipes
+                      .flatMap((r) => r.ingredients)
+                      .filter((i) =>
+                        i.toLowerCase().startsWith(text.toLowerCase())
+                      );
+                    setSuggestions(filtered);
+                  } else setSuggestions([]);
+                }}
+              />
+            </View>
 
             {suggestions.length > 0 && (
               <View style={styles.suggestionBox}>
-                {suggestions.map((item) => (
+                {suggestions.map((item, idx) => (
                   <TouchableOpacity
-                    key={item}
+                    key={idx}
                     onPress={() => {
                       if (!currentIngredients.includes(item)) {
                         setCurrentIngredients([...currentIngredients, item]);
@@ -446,16 +542,15 @@ export default function RecipeScreen({ navigation }) {
           </View>
         )}
 
-        {/* Valgte ingredienser */}
         <View style={styles.ingredientsContainer}>
           {currentIngredients.length > 0 ? (
-            currentIngredients.map((item, index) => (
-              <View key={index} style={styles.ingredientBox}>
+            currentIngredients.map((item, i) => (
+              <View key={i} style={styles.ingredientBox}>
                 <Text style={styles.ingredientText}>{item}</Text>
                 <TouchableOpacity
                   onPress={() =>
                     setCurrentIngredients(
-                      currentIngredients.filter((i) => i !== item)
+                      currentIngredients.filter((x) => x !== item)
                     )
                   }
                 >
@@ -468,20 +563,15 @@ export default function RecipeScreen({ navigation }) {
           )}
         </View>
 
-        <Text style={styles.recipeTitle}>
-          🍳 Forslag baseret på dine ingredienser
-        </Text>
+        <Text style={styles.recipeTitle}>🍳 Forslag baseret på dine ingredienser</Text>
 
-        {/* Opskrifter */}
         <View style={styles.recipeContainer}>
           {filteredRecipes.length > 0 ? (
             filteredRecipes.map((recipe) => (
               <TouchableOpacity
                 key={recipe.id}
                 style={styles.recipeCard}
-                onPress={() =>
-                  navigation.navigate("OpskriftDetaljer", { recipe })
-                }
+                onPress={() => navigation.navigate("OpskriftDetaljer", { recipe })}
               >
                 <Image source={recipe.image} style={styles.recipeImage} />
                 <Text style={styles.recipeName}>{recipe.name}</Text>
@@ -492,8 +582,6 @@ export default function RecipeScreen({ navigation }) {
               Ingen opskrifter matcher dine ingredienser 😢
             </Text>
           )}
-
-          {/* Tilbage-knap */}
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => navigation.navigate("Søgning")}
@@ -506,7 +594,6 @@ export default function RecipeScreen({ navigation }) {
   );
 }
 
-// 💅 STYLING
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#F3F0E9" },
   scroll: { alignItems: "center", padding: 20 },
@@ -516,22 +603,30 @@ const styles = StyleSheet.create({
     color: "#49586B",
     marginBottom: 20,
   },
-  addIngredientSection: {
-    width: "80%",
-    marginBottom: 20,
-  },
+
+  // 👇 NYT søgefelt-design 👇
+  addIngredientSection: { width: "90%", marginBottom: 20 },
   addIngredientTitle: {
     fontFamily: "BelanosimaBold",
     fontSize: 16,
     color: "#49586B",
-    marginBottom: 8,
+    marginBottom: 10,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#E7E7E7",
+    borderWidth: 3,
+    borderColor: "#F4A0CE",
+    borderRadius: 50,
+    paddingHorizontal: 15,
+    height: 55,
+  },
+  searchIcon: {
+    marginRight: 10,
   },
   addIngredientInput: {
-    backgroundColor: "#E7E7E7",
-    borderColor: "#49586B",
-    borderWidth: 2,
-    borderRadius: 8,
-    padding: 10,
+    flex: 1,
     fontFamily: "Belanosima",
     fontSize: 16,
     color: "#49586B",
@@ -543,11 +638,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 5,
   },
-  suggestionText: {
-    padding: 10,
-    fontFamily: "Belanosima",
-    color: "#49586B",
-  },
+  suggestionText: { padding: 10, fontFamily: "Belanosima", color: "#49586B" },
+
   ingredientsContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -571,16 +663,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginRight: 8,
   },
-  removeText: {
-    fontSize: 16,
-    color: "#D9534F",
-  },
+  removeText: { fontSize: 16, color: "#D9534F" },
   noIngredients: {
     fontFamily: "Belanosima",
     color: "#49586B",
     fontSize: 16,
     textAlign: "center",
   },
+
   recipeTitle: {
     fontFamily: "BelanosimaBold",
     color: "#49586B",
@@ -601,10 +691,7 @@ const styles = StyleSheet.create({
     width: 150,
     elevation: 3,
   },
-  recipeImage: {
-    width: "100%",
-    height: 100,
-  },
+  recipeImage: { width: "100%", height: 100 },
   recipeName: {
     fontFamily: "BelanosimaBold",
     color: "#49586B",
@@ -626,10 +713,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignSelf: "center",
     marginVertical: 30,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
     elevation: 3,
   },
   backButtonText: {

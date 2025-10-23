@@ -65,6 +65,7 @@ export default function App() {
         <Drawer.Screen name="Hjem" component={HomeScreen} />
         <Drawer.Screen name="Favoritter" component={FavoritesScreen} />
         <Drawer.Screen name="Søgning" component={SearchScreen} />
+        
 
         {/* 📷 Kamera-siden skjules fra menuen */}
         <Drawer.Screen

@@ -1,18 +1,20 @@
+import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-    FlatList,
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import CustomHeader from "../components/CustomHeader";
 
 export default function FavoritesScreen({ navigation }) {
   const [favorites, setFavorites] = useState([]);
 
+  // 🔁 Indlæs favoritter når skærmen åbnes
   useEffect(() => {
     const loadFavorites = async () => {
       try {
@@ -27,14 +29,19 @@ export default function FavoritesScreen({ navigation }) {
       }
     };
 
-    // Opdater hver gang skærmen åbnes
     const unsubscribe = navigation.addListener("focus", loadFavorites);
     return unsubscribe;
   }, [navigation]);
 
-  const clearFavorites = async () => {
-    await AsyncStorage.removeItem("favorites");
-    setFavorites([]);
+  // ❌ Fjern én favorit
+  const removeFavorite = async (id) => {
+    try {
+      const updated = favorites.filter((item) => item.id !== id);
+      setFavorites(updated);
+      await AsyncStorage.setItem("favorites", JSON.stringify(updated));
+    } catch (error) {
+      console.error("Fejl ved fjernelse af favorit:", error);
+    }
   };
 
   return (
@@ -51,32 +58,40 @@ export default function FavoritesScreen({ navigation }) {
           data={favorites}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.card}
-              // 👇 Sørger for at åbne den detaljerede opskrift
-              onPress={() =>
-                navigation.navigate("OpskriftDetaljer", { recipe: item })
-              }
-            >
-              <Image source={item.image} style={styles.image} />
-              <View style={styles.cardContent}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.subText}>Tryk for at se opskriften</Text>
-              </View>
-            </TouchableOpacity>
+            <View style={styles.card}>
+              {/* 🗑️ Individuelt slettekryds */}
+              <TouchableOpacity
+                style={styles.deleteIcon}
+                onPress={() => removeFavorite(item.id)}
+              >
+                <Ionicons name="close-circle" size={28} color="#C0392B" />
+              </TouchableOpacity>
+
+              {/* 📸 Opskriftens billede og navigation */}
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("OpskrifterStack", {
+  screen: "OpskriftDetaljer",
+  params: { recipe: item, fromFavorites: true },
+})
+
+                }
+              >
+                <Image source={item.image} style={styles.image} />
+                <View style={styles.cardContent}>
+                  <Text style={styles.name}>{item.name}</Text>
+                  <Text style={styles.subText}>Tryk for at se opskriften</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           )}
         />
-      )}
-
-      {favorites.length > 0 && (
-        <TouchableOpacity style={styles.clearButton} onPress={clearFavorites}>
-          <Text style={styles.clearButtonText}>Ryd favoritter</Text>
-        </TouchableOpacity>
       )}
     </View>
   );
 }
 
+// 🎨 Styling
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
@@ -104,10 +119,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: "hidden",
     elevation: 3,
+    position: "relative",
+  },
+  deleteIcon: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    zIndex: 2,
   },
   image: {
     width: "100%",
     height: 150,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   cardContent: {
     padding: 10,
@@ -122,19 +146,5 @@ const styles = StyleSheet.create({
     fontFamily: "Belanosima",
     fontSize: 14,
     color: "#6B7280",
-  },
-  clearButton: {
-    backgroundColor: "#49586B",
-    paddingVertical: 12,
-    borderRadius: 10,
-    alignSelf: "center",
-    marginBottom: 20,
-    width: "70%",
-  },
-  clearButtonText: {
-    color: "#F3F0E9",
-    textAlign: "center",
-    fontFamily: "BelanosimaBold",
-    fontSize: 16,
   },
 });

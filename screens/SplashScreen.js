@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 68,
-    color: "#F3F0E9",
+    color: "#F4A0CE",
     fontFamily: "BelanosimaBold",
     letterSpacing: 4,
   },
